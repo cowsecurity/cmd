@@ -12,7 +12,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/go-cmd/cmd"
+	"github.com/cowsecurity/cmd"
 	"github.com/go-test/deep"
 )
 
@@ -462,7 +462,7 @@ func TestCmdCombinedOutputOnly(t *testing.T) {
 	}
 	var s cmd.Status
 	var stdout []string
-	var stderr []string //creating nil slice and cmd.Stderr should always be nil in combined
+	var stderr []string // creating nil slice and cmd.Stderr should always be nil in combined
 
 	touchFile(tmpfile.Name())
 	s = p.Status()
@@ -524,7 +524,7 @@ func TestCmdCombinedOutputOnly(t *testing.T) {
 }
 
 func TestCmdBothCombinedStreamOutput(t *testing.T) {
-	//This tests the buffered combined
+	// This tests the buffered combined
 
 	tmpfile, err := ioutil.TempFile("", "cmd.TestCombinedOutput")
 	if err != nil {
@@ -615,11 +615,11 @@ func TestCmdBothCombinedStreamOutput(t *testing.T) {
 	}
 
 	s := p.Status()
-	//stdout should have both stdout and stderr output
+	// stdout should have both stdout and stderr output
 	if len(s.Stdout) < readLines*2 {
 		t.Fatalf("read %d lines from buffered STDOUT, expected %d", len(s.Stdout), readLines)
 	}
-	//stderr should be empty
+	// stderr should be empty
 	if len(s.Stderr) != 0 {
 		t.Fatalf("read %d lines from buffered STDERR, expected %d", len(s.Stderr), readLines)
 	}
@@ -1281,7 +1281,6 @@ func TestCmdNoOutput(t *testing.T) {
 }
 
 func TestStdinOk(t *testing.T) {
-
 	tests := []struct {
 		in []byte
 	}{

@@ -11,7 +11,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/go-cmd/cmd"
+	"github.com/cowsecurity/cmd"
 	"github.com/go-test/deep"
 )
 

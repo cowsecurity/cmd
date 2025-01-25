@@ -100,10 +100,8 @@ type Cmd struct {
 	beforeExecFuncs []func(cmd *exec.Cmd)
 }
 
-var (
-	// ErrNotStarted is returned by Stop if called before Start or StartWithStdin.
-	ErrNotStarted = errors.New("command not running")
-)
+// ErrNotStarted is returned by Stop if called before Start or StartWithStdin.
+var ErrNotStarted = errors.New("command not running")
 
 // Status represents the running status and consolidated return of a Cmd. It can
 // be obtained any time by calling Cmd.Status. If StartTs > 0, the command has
@@ -389,7 +387,6 @@ func (c *Cmd) Status() Status {
 		c.status.Runtime = time.Now().Sub(c.startTime).Seconds()
 		if c.stdoutBuf != nil {
 			c.status.Stdout = c.stdoutBuf.Lines()
-
 		}
 		if c.stderrBuf != nil {
 			c.status.Stderr = c.stderrBuf.Lines()
@@ -615,6 +612,10 @@ func (rw *OutputBuffer) Lines() []string {
 	// Scanners are io.Readers which effectively destroy the buffer by reading
 	// to EOF. So once we scan the buf to lines, the buf is empty again.
 	s := bufio.NewScanner(rw.buf)
+	// Adding a fix to increase maximum line buffer.
+	const maxCapacity = 1 * 1024 * 1024 // 1 MB
+	buf := make([]byte, maxCapacity)
+	s.Buffer(buf, maxCapacity)
 	for s.Scan() {
 		rw.lines = append(rw.lines, s.Text())
 	}
