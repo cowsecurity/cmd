@@ -613,7 +613,7 @@ func (rw *OutputBuffer) Lines() []string {
 	// to EOF. So once we scan the buf to lines, the buf is empty again.
 	s := bufio.NewScanner(rw.buf)
 	// Adding a fix to increase maximum line buffer.
-	const maxCapacity = 1 * 1024 * 1024 // 1 MB
+	const maxCapacity = 10 * 1024 * 1024 // 10 MB
 	buf := make([]byte, maxCapacity)
 	s.Buffer(buf, maxCapacity)
 	for s.Scan() {
